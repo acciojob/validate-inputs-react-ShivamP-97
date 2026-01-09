@@ -42,10 +42,19 @@ const Form = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const errorMessage = validate(name, value);
+
+    setError((prev) => ({
+      ...prev,
+      [name]: errorMessage,
     }));
   };
 
@@ -74,6 +83,7 @@ const Form = () => {
           placeholder="Name"
           value={formData.name}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
         {error.name && (
           <p className="errorMessage" style={{ color: "red" }}>
@@ -88,6 +98,7 @@ const Form = () => {
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
         {error.address && (
           <p className="errorMessage" style={{ color: "red" }}>
@@ -102,6 +113,7 @@ const Form = () => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
         {error.email && (
           <p className="errorMessage" style={{ color: "red" }}>
@@ -116,6 +128,7 @@ const Form = () => {
           placeholder="Mobile"
           value={formData.mobile}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
         {error.mobile && (
           <p className="errorMessage" style={{ color: "red" }}>
