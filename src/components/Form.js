@@ -32,57 +32,37 @@ const Form = () => {
     }
 
     if (name === "mobile") {
-      if (!/^\d{10}$/.test(value)) {
-        error = "Mobile number must be 10 digits";
+      if (value.length > 10) {
+        error = "Mobile number should not be more than 10 characters";
       }
     }
 
     return error;
   };
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+  };
 
-    const errorMessage = validate(name, value);
-
-    setError((prev) => ({
-      ...prev,
-      [name]: errorMessage,
-    }));
-  }
-
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     let newError = {};
-    let valid = true;
 
     Object.entries(formData).forEach(([key, value]) => {
       const errorMessage = validate(key, value);
       if (errorMessage) {
         newError[key] = errorMessage;
-        valid = false;
       }
     });
 
     setError(newError);
-
-    if (!valid) return;
-
-    setFormData({
-      name: "",
-      address: "",
-      email: "",
-      mobile: "",
-    });
-
-    setError({});
-  }
+  };
 
   return (
     <div>
@@ -90,9 +70,9 @@ const Form = () => {
         <label>Name</label>
         <input
           type="text"
+          name="name"
           placeholder="Name"
           value={formData.name}
-          name="name"
           onChange={handleChange}
         />
         {error.name && (
@@ -105,8 +85,8 @@ const Form = () => {
         <input
           type="text"
           name="address"
-          value={formData.address}
           placeholder="Address"
+          value={formData.address}
           onChange={handleChange}
         />
         {error.address && (
@@ -119,8 +99,8 @@ const Form = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
           placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
         />
         {error.email && (
@@ -133,8 +113,8 @@ const Form = () => {
         <input
           type="tel"
           name="mobile"
-          value={formData.mobile}
           placeholder="Mobile"
+          value={formData.mobile}
           onChange={handleChange}
         />
         {error.mobile && (
